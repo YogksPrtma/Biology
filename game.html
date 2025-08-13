@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Game: Tebak Nama Ilmiah (🍬 Permen)</title>
+<style>
+  :root{
+    --bg:#0f172a;        /* slate-900 */
+    --panel:#111827;     /* gray-900 */
+    --accent:#22c55e;    /* green-500 */
+    --accent-2:#3b82f6;  /* blue-500 */
+    --danger:#ef4444;    /* red-500 */
+    --text:#e5e7eb;      /* gray-200 */
+    --muted:#94a3b8;     /* slate-400 */
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: radial-gradient(1200px 800px at 50% -200px, #1f2937 0%, var(--bg) 55%, #0b1022 100%);
+    color: var(--text);
+    min-height:100dvh; display:flex; flex-direction:column;
+  }
+  header{
+    padding:16px 12px; text-align:center; background:transparent;
+  }
+  header h1{margin:.2rem 0; font-size:clamp(1.2rem, 3vw, 1.8rem)}
+  .nav{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:8px}
+  .nav a{
+    text-decoration:none; color:white; background:#1f2937; border:1px solid #374151;
+    padding:8px 12px; border-radius:10px; font-size:.95rem
+  }
+  .nav a:hover{background:#273042}
+  main{flex:1; display:grid; place-items:center; padding:16px}
+  .card{
+    width:min(920px, 92vw);
+    background: linear-gradient(180deg, #0b1224, #0a0f1d);
+    border:1px solid #1f2937; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.45);
+    padding:18px;
+  }
+  .topbar{
+    display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    border-bottom:1px dashed #23304b; padding-bottom:10px; margin-bottom:14px
+  }
+  .stat{display:flex; align-items:center; gap:8px; color:var(--muted)}
+  .stat b{color:var(--text)}
+  .candies span{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; margin-right:6px; border-radius:7px;
+    background:#1f2937; border:1px solid #334155; font-size:14px
+  }
+  .timer{
+    --w:220px;
+    width:var(--w); height:10px; background:#111827; border-radius:999px; border:1px solid #263042; overflow:hidden;
+  }
+  .timer > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); transition:width .2s}
+  .qbox{
+    margin:10px 0 16px; padding:14px; border-radius:12px;
+    background:#0b162e; border:1px solid #243152;
+  }
+  .qbox h2{margin:0; font-size:clamp(1.05rem, 2.6vw, 1.25rem)}
+  .qbox p{margin:.4rem 0 0; color:var(--muted)}
+  .options{
+    display:grid; gap:10px;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+  @media (max-width:640px){ .options{grid-template-columns: 1fr;} }
+  .btn{
+    padding:12px 14px; background:#0d1a33; color:#e5e7eb; border:1px solid #22304f; border-radius:12px;
+    text-align:left; cursor:pointer; transition:transform .03s ease, background .2s, border-color .2s;
+    font-size:clamp(.95rem, 2.6vw, 1rem)
+  }
+  .btn:hover{background:#112047}
+  .btn:active{transform:scale(.99)}
+  .btn.correct{border-color:#2dd4bf; background:#0d2d2a}
+  .btn.wrong{border-color:var(--danger); background:#2a0d12}
+  .controls{display:flex; justify-content:space-between; align-items:center; margin-top:14px}
+  .ghost{opacity:.7}
+  .pill{
+    background:#0d1a33; border:1px solid #22304f; color:#c7d2fe; padding:8px 12px; border-radius:999px; font-size:.9rem
+  }
+  .cta{
+    background:linear-gradient(90deg, #3b82f6, #06b6d4);
+    color:white; border:none; padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:700
+  }
+  .cta:active{transform:translateY(1px)}
+  .center{text-align:center}
+  .hidden{display:none !important}
+  .toast{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:16px;
+    background:#0b162e; border:1px solid #22304f; color:#dbeafe;
+    padding:10px 14px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  .finish{
+    text-align:center; padding:24px 12px; border-radius:14px;
+    background:#071026; border:1px solid #1b2747; margin-top:10px
+  }
+  .finish h3{margin:.2rem 0 .6rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎮 Tebak Nama Ilmiah — Mode 🍬 Permen</h1>
+  <div class="nav">
+    <a href="index.html">🏠 Beranda</a>
+    <a href="materi.html">📖 Materi</a>
+    <a href="tabel.html">📊 Tabel</a>
+    <a href="quiz.html">📝 Quiz</a>
+    <a href="ulasan.html">📚 Ulasan</a>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <div class="topbar">
+      <div class="stat"><span class="ghost">Skor:</span> <b id="score">0</b></div>
+      <div class="stat candies" aria-label="Permen (nyawa)"><span>🍬</span><span>🍬</span><span>🍬</span></div>
+      <div class="stat">
+        <span class="ghost">Timer</span>
+        <div class="timer" aria-label="Timer"><i id="timebar"></i></div>
+        <span class="ghost" id="tlabel">0s</span>
+      </div>
+      <button class="pill" id="skipBtn" title="Lewati 1 soal (tanpa mengurangi permen)">Lewati ⏭️</button>
+    </div>
+
+    <div class="qbox">
+      <h2 id="question">Tekan Mulai untuk bermain!</h2>
+      <p id="hint" class="ghost">Hint akan muncul di sini.</p>
+    </div>
+
+    <div class="options" id="options"></div>
+
+    <div class="controls">
+      <button class="cta" id="startBtn">Mulai ▶️</button>
+      <span class="ghost">Benar +10 poin • Salah kehilangan 🍬</span>
+    </div>
+
+    <div id="finishPanel" class="finish hidden">
+      <h3>🎉 Sip! Sesi selesai</h3>
+      <p id="summary">Skor kamu: 0</p>
+      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:6px">
+        <button class="cta" id="againBtn">Main Lagi 🔁</button>
+        <button class="pill" id="shareBtn">Bagikan Skor 📣</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast hidden">…</div>
+
+<script>
+/* ====== DATA BANK ====== */
+const BANK = [
+  {common:"Kucing", sci:"Felis catus"},
+  {common:"Anjing", sci:"Canis lupus familiaris"},
+  {common:"Manusia", sci:"Homo sapiens"},
+  {common:"Harimau", sci:"Panthera tigris"},
+  {common:"Singa", sci:"Panthera leo"},
+  {common:"Padi", sci:"Oryza sativa"},
+  {common:"Jagung", sci:"Zea mays"},
+  {common:"Tomat", sci:"Solanum lycopersicum"},
+  {common:"Cabai", sci:"Capsicum annuum"},
+  {common:"Pisang", sci:"Musa acuminata"},
+  {common:"Mangga", sci:"Mangifera indica"},
+  {common:"Jambu biji", sci:"Psidium guajava"},
+  {common:"Gajah Asia", sci:"Elephas maximus"},
+  {common:"Gajah Afrika", sci:"Loxodonta africana"},
+  {common:"Gorila", sci:"Gorilla gorilla"},
+  {common:"Simpanse", sci:"Pan troglodytes"},
+  {common:"Ikan mas", sci:"Cyprinus carpio"},
+  {common:"Mawar", sci:"Rosa gallica"},
+  {common:"Kobra India", sci:"Naja naja"},
+  {common:"Elang botak", sci:"Haliaeetus leucocephalus"}
+];
+
+/* ====== STATE ====== */
+let score = 0;
+let lives = 3;           // 🍬
+let used = new Set();    // indeks soal yg sudah keluar
+let cur = null;          // current question index
+let round = 0;
+let maxRounds = 10;      // total soal per sesi
+let ticking = null;
+let timePerQ = 12;       // detik per soal
+let timeLeft = timePerQ;
+
+/* ====== DOM ====== */
+const qEl = document.getElementById('question');
+const hintEl = document.getElementById('hint');
+const optsEl = document.getElementById('options');
+const scoreEl = document.getElementById('score');
+const timebar = document.getElementById('timebar');
+const tlabel = document.getElementById('tlabel');
+const startBtn = document.getElementById('startBtn');
+const skipBtn = document.getElementById('skipBtn');
+const finishPanel = document.getElementById('finishPanel');
+const summary = document.getElementById('summary');
+const againBtn = document.getElementById('againBtn');
+const shareBtn = document.getElementById('shareBtn');
+const toast = document.getElementById('toast');
+
+/* ====== UTILS ====== */
+const rand = (n)=> Math.floor(Math.random()*n);
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=rand(i+1); [arr[i],arr[j]]=[arr[j],arr[i]] } return arr }
+function setCandies(n){
+  const box = document.querySelector('.candies');
+  box.innerHTML = '';
+  for(let i=0;i<n;i++){ const s=document.createElement('span'); s.textContent='🍬'; box.appendChild(s) }
+}
+function toastMsg(msg, ms=1000){
+  toast.textContent = msg; toast.classList.remove('hidden');
+  setTimeout(()=> toast.classList.add('hidden'), ms);
+}
+function beep(freq=880, dur=120, type='sine', vol=0.05){
+  try{
+    const actx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = actx.createOscillator(); const g = actx.createGain();
+    o.type=type; o.frequency.value=freq; g.gain.value=vol;
+    o.connect(g); g.connect(actx.destination);
+    o.start(); setTimeout(()=>{o.stop(); actx.close()}, dur);
+  }catch(e){/* no audio */}
+}
+
+/* ====== GAME FLOW ====== */
+function resetGame(){
+  score=0; lives=3; round=0; used.clear(); cur=null;
+  scoreEl.textContent = score;
+  setCandies(lives);
+  finishPanel.classList.add('hidden');
+  startBtn.disabled = false;
+  skipBtn.disabled = true;
+  qEl.textContent = "Tekan Mulai untuk bermain!";
+  hintEl.textContent = "Hint akan muncul di sini.";
+  hintEl.classList.add('ghost');
+  optsEl.innerHTML = '';
+  stopTimer();
+  setTimer(timePerQ);
+}
+
+function startGame(){
+  startBtn.disabled = true;
+  skipBtn.disabled = false;
+  nextRound();
+}
+
+function endGame(reason="Sesi selesai!"){
+  stopTimer();
+  skipBtn.disabled = true;
+  startBtn.disabled = false;
+  qEl.textContent = "Permainan berakhir.";
+  hintEl.textContent = reason;
+  hintEl.classList.remove('ghost');
+  optsEl.innerHTML = '';
+  summary.textContent = `Skor kamu: ${score} • Soal terjawab: ${round}/${maxRounds}`;
+  finishPanel.classList.remove('hidden');
+}
+
+function nextRound(){
+  if(lives<=0) return endGame("Permen kamu habis 😅");
+  if(round>=maxRounds) return endGame("Mantap! Kamu menyelesaikan semua soal.");
+  // pilih soal baru yang belum dipakai
+  const available = BANK.map((_,i)=>i).filter(i=>!used.has(i));
+  if(available.length===0) used.clear(); // recycle jika habis
+  const idx = available[rand(available.length)];
+  used.add(idx); cur = idx; round++;
+
+  // build opsi
+  const correct = BANK[idx].sci;
+  const wrongPool = BANK.map(x=>x.sci).filter(s=>s!==correct);
+  const choices = shuffle([correct, ...shuffle(wrongPool).slice(0,3)]);
+  renderQuestion(BANK[idx].common, correct, choices);
+
+  // timer
+  setTimer(timePerQ);
+  startTimer();
+}
+
+function renderQuestion(common, correct, choices){
+  qEl.innerHTML = `Nama ilmiah untuk <b>${common}</b> adalah …?`;
+  hintEl.textContent = `Hint: Genus = huruf kapital awal, spesies huruf kecil. Contoh: Homo sapiens`;
+  hintEl.classList.remove('ghost');
+  optsEl.innerHTML = '';
+  choices.forEach(ch=>{
+    const b = document.createElement('button');
+    b.className = 'btn';
+    b.innerHTML = `<em>${ch}</em>`;
+    b.onclick = ()=> pickAnswer(b, ch === correct);
+    optsEl.appendChild(b);
+  });
+}
+
+function pickAnswer(btn, isCorrect){
+  // disable semua tombol
+  [...optsEl.children].forEach(b=> b.disabled = true);
+  stopTimer();
+  if(isCorrect){
+    btn.classList.add('correct');
+    score += 10; scoreEl.textContent = score;
+    beep(980, 120, 'square', .06);
+    toastMsg('✅ Benar! +10 poin');
+    setTimeout(nextRound, 550);
+  }else{
+    btn.classList.add('wrong');
+    lives = Math.max(0, lives-1); setCandies(lives);
+    beep(220, 180, 'sawtooth', .06);
+    toastMsg('❌ Salah! -1 🍬', 900);
+    if(lives<=0){ setTimeout(()=> endGame("Permen kamu habis 😅"), 600); }
+    else{ setTimeout(nextRound, 700); }
+  }
+}
+
+function skipQuestion(){
+  if(startBtn.disabled===false) return; // belum mulai
+  stopTimer();
+  toastMsg('⏭️ Dilewati');
+  setTimeout(nextRound, 350);
+}
+
+/* ====== TIMER ====== */
+function setTimer(n){
+  timeLeft = n;
+  timebar.style.width = '0%';
+  tlabel.textContent = `${timeLeft}s`;
+}
+function startTimer(){
+  stopTimer();
+  const total = timeLeft;
+  ticking = setInterval(()=>{
+    timeLeft--;
+    const pct = ((total-timeLeft)/total)*100;
+    timebar.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+    tlabel.textContent = `${Math.max(0,timeLeft)}s`;
+    if(timeLeft<=0){
+      stopTimer();
+      // timeout dianggap salah
+      lives = Math.max(0, lives-1); setCandies(lives);
+      beep(160, 200, 'triangle', .06);
+      toastMsg('⏰ Waktu habis! -1 🍬', 900);
+      if(lives<=0){ setTimeout(()=> endGame("Permen kamu habis 😅"), 600); }
+      else{ setTimeout(nextRound, 600); }
+    }
+  }, 1000);
+}
+function stopTimer(){ if(ticking){ clearInterval(ticking); ticking=null } }
+
+/* ====== EVENTS ====== */
+startBtn.addEventListener('click', startGame);
+skipBtn.addEventListener('click', skipQuestion);
+againBtn.addEventListener('click', resetGame);
+shareBtn.addEventListener('click', ()=>{
+  const txt = `Aku main Tebak Nama Ilmiah dan dapat skor ${score} 🎉`;
+  if(navigator.share){
+    navigator.share({title:'Skor Game Binomial', text:txt, url:location.href}).catch(()=>{});
+  }else{
+    navigator.clipboard?.writeText(txt);
+    toastMsg('Skor disalin ke clipboard!');
+  }
+});
+
+/* init */
+resetGame();
+</script>
+
+</body>
+</html>
