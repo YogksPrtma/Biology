@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Quiz - Binomial Nomenklatur</title>
+<style>
+body {font-family: Arial, sans-serif; margin:0; background:#f4f4f4;}
+header, nav, footer {text-align:center; padding:15px;}
+header {background:#2c3e50; color:white;}
+nav a {color:white; background:#34495e; padding:10px; margin:5px; display:inline-block; text-decoration:none; border-radius:5px;}
+nav a:hover {background:#1abc9c;}
+main {padding:20px; max-width:800px; margin:auto; background:white; border-radius:10px;}
+button {padding:10px 15px; background:#1abc9c; border:none; color:white; border-radius:5px; cursor:pointer;}
+button:hover {background:#16a085;}
+</style>
+</head>
+<body>
+<header>
+  <h1>Quiz Binomial Nomenklatur</h1>
+</header>
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="materi.html">Materi</a>
+  <a href="tabel.html">Tabel</a>
+  <a href="quiz.html">Quiz</a>
+  <a href="ulasan.html">Ulasan</a>
+</nav>
+<main>
+<form id="quizForm">
+  <ol>
+    <li>Siapa yang memperkenalkan sistem binomial nomenklatur?<br>
+      <input type="radio" name="q1" value="a"> Charles Darwin<br>
+      <input type="radio" name="q1" value="b"> Carl Linnaeus<br>
+      <input type="radio" name="q1" value="c"> Gregor Mendel
+    </li>
+    <li>Penulisan nama ilmiah yang benar adalah?<br>
+      <input type="radio" name="q2" value="a"> homo Sapiens<br>
+      <input type="radio" name="q2" value="b"> Homo Sapiens<br>
+      <input type="radio" name="q2" value="c"> <em>Homo sapiens</em>
+    </li>
+    <li>Bagian pertama dari nama ilmiah menunjukkan?<br>
+      <input type="radio" name="q3" value="a"> Famili<br>
+      <input type="radio" name="q3" value="b"> Genus<br>
+      <input type="radio" name="q3" value="c"> Spesies
+    </li>
+    <li>Bagian kedua dari nama ilmiah menunjukkan?<br>
+      <input type="radio" name="q4" value="a"> Spesies<br>
+      <input type="radio" name="q4" value="b"> Famili<br>
+      <input type="radio" name="q4" value="c"> Ordo
+    </li>
+    <li>Bahasa yang digunakan dalam binomial nomenklatur adalah?<br>
+      <input type="radio" name="q5" value="a"> Yunani<br>
+      <input type="radio" name="q5" value="b"> Latin<br>
+      <input type="radio" name="q5" value="c"> Inggris
+    </li>
+    <li>Nama ilmiah harimau adalah?<br>
+      <input type="radio" name="q6" value="a"> Panthera leo<br>
+      <input type="radio" name="q6" value="b"> Panthera tigris<br>
+      <input type="radio" name="q6" value="c"> Felis tigris
+    </li>
+    <li>Nama ilmiah padi adalah?<br>
+      <input type="radio" name="q7" value="a"> Zea mays<br>
+      <input type="radio" name="q7" value="b"> Oryza sativa<br>
+      <input type="radio" name="q7" value="c"> Triticum aestivum
+    </li>
+    <li>Genus ditulis dengan?<br>
+      <input type="radio" name="q8" value="a"> Huruf kapital di awal<br>
+      <input type="radio" name="q8" value="b"> Semua huruf kapital<br>
+      <input type="radio" name="q8" value="c"> Semua huruf kecil
+    </li>
+    <li>Spesies ditulis dengan?<br>
+      <input type="radio" name="q9" value="a"> Huruf kapital di awal<br>
+      <input type="radio" name="q9" value="b"> Huruf kecil semua<br>
+      <input type="radio" name="q9" value="c"> Semua huruf kapital
+    </li>
+    <li>Manakah yang benar?<br>
+      <input type="radio" name="q10" value="a"> Genus + Famili<br>
+      <input type="radio" name="q10" value="b"> Genus + Spesies<br>
+      <input type="radio" name="q10" value="c"> Famili + Spesies
+    </li>
+  </ol>
+  <button type="button" onclick="checkAnswers()">Kirim Jawaban</button>
+</form>
+</main>
+<footer>
+  <p>&copy; 2025 Stand Biologi</p>
+</footer>
+<script>
+function checkAnswers(){
+  let correct = {
+    q1:"b", q2:"c", q3:"b", q4:"a", q5:"b",
+    q6:"b", q7:"b", q8:"a", q9:"b", q10:"b"
+  };
+  let score = 0;
+  for (let i=1; i<=10; i++){
+    let q = document.querySelector(`input[name="q${i}"]:checked`);
+    if(q && q.value === correct[`q${i}`]) score++;
+  }
+  alert(`Nilai kamu: ${score} / 10\nLihat pembahasan di halaman Ulasan.`);
+}
+</script>
+</body>
+</html>
