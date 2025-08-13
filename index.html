@@ -1,339 +1,46 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Binomial Nomenklatur</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e8f0fe;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #4285f4;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    main {
-      max-width: 1000px;
-      margin: 20px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #4285f4;
-      border-bottom: 2px solid #4285f4;
-      padding-bottom: 5px;
-    }
-    p {
-      line-height: 1.6;
-    }
-    ul {
-      line-height: 1.6;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th {
-      background: #4285f4;
-      color: white;
-      padding: 10px;
-    }
-    td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-    tr:nth-child(even) {
-      background: #f5f5f5;
-    }
-    em {
-      font-style: italic;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-      color: #555;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Ulasan Quiz - Binomial Nomenklatur</title>
+<style>
+body {font-family: Arial, sans-serif; margin:0; background:#f4f4f4;}
+header, nav, footer {text-align:center; padding:15px;}
+header {background:#2c3e50; color:white;}
+nav a {color:white; background:#34495e; padding:10px; margin:5px; display:inline-block; text-decoration:none; border-radius:5px;}
+nav a:hover {background:#1abc9c;}
+main {padding:20px; max-width:900px; margin:auto; background:white; border-radius:10px;}
+h2 {color:#1abc9c;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Binomial Nomenklatur</h1>
-  </header>
-  <main>
-    <p><strong>Binomial nomenklatur</strong> adalah sistem penamaan ilmiah makhluk hidup menggunakan dua kata: <em>genus</em> dan <em>spesies</em>. Dikembangkan oleh Carolus Linnaeus, sistem ini digunakan secara internasional untuk menghindari kebingungan akibat nama lokal.</p>
-    
-    <h2>Aturan Penulisan</h2>
-    <ul>
-      <li>Dua kata: Genus (kapital) + Spesies (huruf kecil)</li>
-      <li>Dicetak miring saat diketik atau digarisbawahi jika ditulis tangan</li>
-      <li>Menggunakan bahasa Latin atau dilatinkan</li>
-      <li>Nama unik dan tidak ambigu</li>
-    </ul>
-    
-    <h2>Contoh Tabel Nama Ilmiah (15 Spesies)</h2>
-    <input type="text" id="searchInput" placeholder="Cari nama umum atau ilmiah..." onkeyup="searchTable()">
-    
-    <table id="dataTable">
-      <thead>
-        <tr>
-          <th>Ikon</th>
-          <th>Nama Umum</th>
-          <th>Nama Ilmiah</th>
-          <th>Genus</th>
-          <th>Spesies</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>👤</td><td>Manusia</td><td><em>Homo sapiens</em></td><td>Homo</td><td>sapiens</td></tr>
-        <tr><td>🐱</td><td>Kucing</td><td><em>Felis catus</em></td><td>Felis</td><td>catus</td></tr>
-        <tr><td>🐶</td><td>Anjing</td><td><em>Canis lupus</em></td><td>Canis</td><td>lupus</td></tr>
-        <tr><td>🦁</td><td>Singa</td><td><em>Panthera leo</em></td><td>Panthera</td><td>leo</td></tr>
-        <tr><td>🌾</td><td>Padi</td><td><em>Oryza sativa</em></td><td>Oryza</td><td>sativa</td></tr>
-        <tr><td>🐭</td><td>Tikus Rumah</td><td><em>Mus musculus</em></td><td>Mus</td><td>musculus</td></tr>
-        <tr><td>🐘</td><td>Gajah Afrika</td><td><em>Loxodonta africana</em></td><td>Loxodonta</td><td>africana</td></tr>
-        <tr><td>🦍</td><td>Gorila</td><td><em>Gorilla gorilla</em></td><td>Gorilla</td><td>gorilla</td></tr>
-        <tr><td>🐒</td><td>Simpanse</td><td><em>Pan troglodytes</em></td><td>Pan</td><td>troglodytes</td></tr>
-        <tr><td>🦅</td><td>Elang Botak</td><td><em>Haliaeetus leucocephalus</em></td><td>Haliaeetus</td><td>leucocephalus</td></tr>
-        <tr><td>🐍</td><td>Ular Kobra</td><td><em>Naja naja</em></td><td>Naja</td><td>naja</td></tr>
-        <tr><td>🦋</td><td>Kupu-Kupu Monark</td><td><em>Danaus plexippus</em></td><td>Danaus</td><td>plexippus</td></tr>
-        <tr><td>🌹</td><td>Mawar Merah</td><td><em>Rosa gallica</em></td><td>Rosa</td><td>gallica</td></tr>
-        <tr><td>🍌</td><td>Pisang</td><td><em>Musa paradisiaca</em></td><td>Musa</td><td>paradisiaca</td></tr>
-        <tr><td>🌳</td><td>Pohon Jati</td><td><em>Tectona grandis</em></td><td>Tectona</td><td>grandis</td></tr>
-      </tbody>
-    </table>
-    
-    <h2>Pembahasan Lengkap</h2>
-    <p>
-      Binomial nomenklatur berasal dari kata "binomial" (dua nama) dan "nomenklatur" (penamaan). Sistem ini diperkenalkan oleh Carolus Linnaeus pada abad ke-18 untuk menyeragamkan penamaan makhluk hidup. 
-      Dalam sistem ini, setiap spesies ditulis dengan dua kata dalam bahasa Latin atau dilatinkan:
-    </p>
-    <ul>
-      <li>Kata pertama adalah Genus, selalu diawali huruf kapital.</li>
-      <li>Kata kedua adalah Spesies, ditulis dengan huruf kecil.</li>
-      <li>Nama harus dicetak miring atau digarisbawahi jika ditulis tangan.</li>
-      <li>Contoh: <em>Homo sapiens</em> (manusia).</li>
-      <li>Penulisan nama ilmiah membantu ilmuwan dari seluruh dunia memahami spesies yang sama tanpa kebingungan bahasa lokal.</li>
-      <li>Nama ilmiah bersifat unik, tidak ambigu, dan diterima secara internasional.</li>
-    </ul>
-    <p>
-      Misalnya, kucing memiliki nama lokal yang berbeda di tiap daerah, tapi nama ilmiahnya tetap <em>Felis catus</em>.
-      Hal ini mempermudah klasifikasi, penelitian, dan komunikasi ilmiah di seluruh dunia.
-    </p>
-  </main>
-  <footer>
-    &copy; Kelompok Biologi - Binomial Nomenklatur
-  </footer>
-  <script>
-    function searchTable() {
-      var input = document.getElementById("searchInput");
-      var filter = input.value.toLowerCase();
-      var table = document.getElementById("dataTable");
-      var tr = table.getElementsByTagName("tr");
-      for (var i = 1; i < tr.length; i++) {
-        tr[i].style.display = "none";
-        var td = tr[i].getElementsByTagName("td");
-        for (var j = 0; j < td.length; j++) {
-          if (td[j]) {
-            if (td[j].innerText.toLowerCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-              break;
-            }
-          }
-        }
-      }
-    }
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Binomial Nomenklatur</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e8f0fe;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #4285f4;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    main {
-      max-width: 1000px;
-      margin: 20px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #4285f4;
-      border-bottom: 2px solid #4285f4;
-      padding-bottom: 5px;
-    }
-    p {
-      line-height: 1.6;
-    }
-    ul {
-      line-height: 1.6;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th {
-      background: #4285f4;
-      color: white;
-      padding: 10px;
-    }
-    td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-    tr:nth-child(even) {
-      background: #f5f5f5;
-    }
-    em {
-      font-style: italic;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-      color: #555;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Binomial Nomenklatur</h1>
-  </header>
-  <main>
-    <p><strong>Binomial nomenklatur</strong> adalah sistem penamaan ilmiah makhluk hidup menggunakan dua kata: <em>genus</em> dan <em>spesies</em>. Dikembangkan oleh Carolus Linnaeus, sistem ini digunakan secara internasional untuk menghindari kebingungan akibat nama lokal.</p>
-    
-    <h2>Aturan Penulisan</h2>
-    <ul>
-      <li>Dua kata: Genus (kapital) + Spesies (huruf kecil)</li>
-      <li>Dicetak miring saat diketik atau digarisbawahi jika ditulis tangan</li>
-      <li>Menggunakan bahasa Latin atau dilatinkan</li>
-      <li>Nama unik dan tidak ambigu</li>
-    </ul>
-    
-    <h2>Contoh Tabel Nama Ilmiah (15 Spesies)</h2>
-    <input type="text" id="searchInput" placeholder="Cari nama umum atau ilmiah..." onkeyup="searchTable()">
-    
-    <table id="dataTable">
-      <thead>
-        <tr>
-          <th>Ikon</th>
-          <th>Nama Umum</th>
-          <th>Nama Ilmiah</th>
-          <th>Genus</th>
-          <th>Spesies</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>👤</td><td>Manusia</td><td><em>Homo sapiens</em></td><td>Homo</td><td>sapiens</td></tr>
-        <tr><td>🐱</td><td>Kucing</td><td><em>Felis catus</em></td><td>Felis</td><td>catus</td></tr>
-        <tr><td>🐶</td><td>Anjing</td><td><em>Canis lupus</em></td><td>Canis</td><td>lupus</td></tr>
-        <tr><td>🦁</td><td>Singa</td><td><em>Panthera leo</em></td><td>Panthera</td><td>leo</td></tr>
-        <tr><td>🌾</td><td>Padi</td><td><em>Oryza sativa</em></td><td>Oryza</td><td>sativa</td></tr>
-        <tr><td>🐭</td><td>Tikus Rumah</td><td><em>Mus musculus</em></td><td>Mus</td><td>musculus</td></tr>
-        <tr><td>🐘</td><td>Gajah Afrika</td><td><em>Loxodonta africana</em></td><td>Loxodonta</td><td>africana</td></tr>
-        <tr><td>🦍</td><td>Gorila</td><td><em>Gorilla gorilla</em></td><td>Gorilla</td><td>gorilla</td></tr>
-        <tr><td>🐒</td><td>Simpanse</td><td><em>Pan troglodytes</em></td><td>Pan</td><td>troglodytes</td></tr>
-        <tr><td>🦅</td><td>Elang Botak</td><td><em>Haliaeetus leucocephalus</em></td><td>Haliaeetus</td><td>leucocephalus</td></tr>
-        <tr><td>🐍</td><td>Ular Kobra</td><td><em>Naja naja</em></td><td>Naja</td><td>naja</td></tr>
-        <tr><td>🦋</td><td>Kupu-Kupu Monark</td><td><em>Danaus plexippus</em></td><td>Danaus</td><td>plexippus</td></tr>
-        <tr><td>🌹</td><td>Mawar Merah</td><td><em>Rosa gallica</em></td><td>Rosa</td><td>gallica</td></tr>
-        <tr><td>🍌</td><td>Pisang</td><td><em>Musa paradisiaca</em></td><td>Musa</td><td>paradisiaca</td></tr>
-        <tr><td>🌳</td><td>Pohon Jati</td><td><em>Tectona grandis</em></td><td>Tectona</td><td>grandis</td></tr>
-      </tbody>
-    </table>
-    
-    <h2>Pembahasan Lengkap</h2>
-    <p>
-      Binomial nomenklatur berasal dari kata "binomial" (dua nama) dan "nomenklatur" (penamaan). Sistem ini diperkenalkan oleh Carolus Linnaeus pada abad ke-18 untuk menyeragamkan penamaan makhluk hidup. 
-      Dalam sistem ini, setiap spesies ditulis dengan dua kata dalam bahasa Latin atau dilatinkan:
-    </p>
-    <ul>
-      <li>Kata pertama adalah Genus, selalu diawali huruf kapital.</li>
-      <li>Kata kedua adalah Spesies, ditulis dengan huruf kecil.</li>
-      <li>Nama harus dicetak miring atau digarisbawahi jika ditulis tangan.</li>
-      <li>Contoh: <em>Homo sapiens</em> (manusia).</li>
-      <li>Penulisan nama ilmiah membantu ilmuwan dari seluruh dunia memahami spesies yang sama tanpa kebingungan bahasa lokal.</li>
-      <li>Nama ilmiah bersifat unik, tidak ambigu, dan diterima secara internasional.</li>
-    </ul>
-    <p>
-      Misalnya, kucing memiliki nama lokal yang berbeda di tiap daerah, tapi nama ilmiahnya tetap <em>Felis catus</em>.
-      Hal ini mempermudah klasifikasi, penelitian, dan komunikasi ilmiah di seluruh dunia.
-    </p>
-  </main>
-  <footer>
-    &copy; Kelompok Biologi - Binomial Nomenklatur
-  </footer>
-  <script>
-    function searchTable() {
-      var input = document.getElementById("searchInput");
-      var filter = input.value.toLowerCase();
-      var table = document.getElementById("dataTable");
-      var tr = table.getElementsByTagName("tr");
-      for (var i = 1; i < tr.length; i++) {
-        tr[i].style.display = "none";
-        var td = tr[i].getElementsByTagName("td");
-        for (var j = 0; j < td.length; j++) {
-          if (td[j]) {
-            if (td[j].innerText.toLowerCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-              break;
-            }
-          }
-        }
-      }
-    }
-  </script>
+<header>
+  <h1>Pembahasan Quiz</h1>
+</header>
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="materi.html">Materi</a>
+  <a href="tabel.html">Tabel</a>
+  <a href="quiz.html">Quiz</a>
+  <a href="ulasan.html">Ulasan</a>
+</nav>
+<main>
+  <h2>Pembahasan Jawaban</h2>
+  <ol>
+    <li><strong>Carl Linnaeus</strong> — Pencetus sistem binomial nomenklatur modern.</li>
+    <li><em>Homo sapiens</em> — Genus kapital, spesies kecil, miring.</li>
+    <li>Bagian pertama = <strong>Genus</strong>.</li>
+    <li>Bagian kedua = <strong>Spesies</strong>.</li>
+    <li>Bahasa Latin dipakai karena sifatnya universal dan tidak berubah.</li>
+    <li>Harimau = <em>Panthera tigris</em>.</li>
+    <li>Padi = <em>Oryza sativa</em>.</li>
+    <li>Genus kapital di awal, sisanya huruf kecil.</li>
+    <li>Spesies huruf kecil semua.</li>
+    <li>Nama ilmiah = Genus + Spesies.</li>
+  </ol>
+</main>
+<footer>
+  <p>&copy; 2025 Stand Biologi</p>
+</footer>
 </body>
 </html>
